@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Componentes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale =1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../Styles/Atarefado.css" />
+    <link rel="stylesheet" href="../Styles/Style.css" />
+    <script src="../Scripts/Script.js"></script>
+    <script src="../Scripts/Atarefado.js"></script>
+</head>
+
+<body>
+    <header class="headerBar primary">
+        <span id="btnCancelNewTask" class="material-icons hidden">arrow_back_ios</span>
+        <div class="appName"><span id="pageTitle">Minhas Tarefas</span></div>
+        <button id="btnAdd" class="badge btn-sm light"><img src="../Assets/plus.png"></button>
+    </header>
+
+    <div id="initialPage" class="component">
+        <div class="componentContent">
+            <div id="blank">
+                <img src="../Assets/relax.png">
+                <p><b>Relaxa!!!</b></p>
+                <p>Tamo em dia!</p>
+            </div>
+            <ul id="taskList" class="list hidden">
+            </ul>
+        </div>
+    </div>
+    <div id="AddPage" class="component hidden">
+        <div class="componentContent">
+            <div class="mb1">
+                <label class="customText" for="inputTask">Tarefa</label>
+                <div id="MainTask" class="field">
+                    <input id="inputNewTask" type="text" autocomplete="off" />
+                </div>
+            </div>
+            <div class="mt2">
+                <label class="customText" for="inputTask">Quero finalizar até</label>
+                <div id="MainTask" class="field">
+                    <input id="inputTaskDate" type="date" autocomplete="off" />
+                </div>
+            </div>
+            <div id="Anytask" class="btngroup between mt1">
+                <p class="customText">Tem subtarefas?</p>
+                <label class="switch mtHalf">
+                <input type="checkbox" id="TaskToggle"/>
+                <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="btngroup end">
+                <button type="button" id="btnNewSubtask" class=" ml4 mt2 badge btn-sm light hidden"><img src="../Assets/plus.png"></button>
+            </div>
+            <div class="btngroup mt2">
+                <button id="btnAddNewTask" class="btn primary" disabled><h2>Mãos a obra!</h2></button>
+            </div>
+        </div>
+    </div>
+    <div id="EditPage" class="component hidden">
+        <div class="componentContent">
+            <div class="mb1">
+                <label class="customText" for="inputTask">Tarefa</label>
+                <div class="field">
+                    <input id="inputEditTask" type="text" autocomplete="off" />
+                </div>
+            </div>
+            <div class="mt2">
+                <label class="customText" for="inputTask">Quero finalizar até</label>
+                <div id="MainTask" class="field">
+                    <input id="inputEditDate" type="date" autocomplete="off" />
+                </div>
+            </div>
+            <div id="AnytaskEdit" class="btngroup between mt1">
+                <p class="customText">Tem subtarefas?</p>
+                <label class="switch mtHalf">
+                <input type="checkbox" id="EditTaskToggle"/>
+                <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="btngroup mt1 end">
+                <button id="btnRemoveTask" class="btn quarter danger">Deletar</button>
+                <button id="btnEditTask" class="btn quarter primary"> Alterar</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
