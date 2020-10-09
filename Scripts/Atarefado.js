@@ -24,6 +24,7 @@ onload = () => {
         document.querySelector('#inputNewTask').value = '';
         document.querySelector('#pageTitle').innerHTML = 'Minhas Tarefas';
         removeSubtaskDivs();
+        showTasks();
         showPage('initialPage')
     };
     document.querySelector('#btnAddNewTask').onclick = () => {
@@ -31,6 +32,9 @@ onload = () => {
     };
     document.querySelector('#btnNewSubtask').onclick = () => {
         newSubtask();
+    };
+    document.querySelector('#btnNewSubtaskEdit').onclick = () => {
+        newSubtaskEdit();
     };
     document.querySelector('#btnEditTask').onclick = () => {
         editTask();
@@ -196,6 +200,8 @@ const showPage = (comp) => {
     }
 };
 const editingTask = (id) => {
+    removeSubtaskDivs();
+
     // inputEditTask
     let input = document.getElementById('inputEditTask');
     input.setAttribute('data-id', id);
@@ -204,8 +210,11 @@ const editingTask = (id) => {
     let subs = document.getElementById('EditTaskToggle');
     subs.checked = task.Subtasks.length > 0;
 
-    if (task.Subtasks.length > 0)
+    if (task.Subtasks.length > 0) {
         editSubtaks(task);
+        let addbutton = document.getElementById('btnNewSubtaskEdit');
+        addbutton.classList.remove('hidden')
+    }
 
     input.value = task.description;
     date.value = task.endDate;
@@ -261,7 +270,7 @@ const addNewTask = () => {
     if (description != '') {
 
         let mainId = Math.random().toString().replace('0.', '');
-        includeSubtask(mainId);
+        includeSubtask(mainId, 'create');
         tasks.push({
             id: mainId,
             description: description,
@@ -318,18 +327,64 @@ const newSubtask = () => {
     }
 
 }
-const includeSubtask = (id) => {
-    let mySubtasks = document.querySelectorAll('[id^="subTask"]');
-    if (mySubtasks.length > 0)
+const newSubtaskEdit = () => {
+
+    var exists = document.querySelectorAll('[id^="subTask"]');
+    var div = document.createElement("div");
+    div.classList.add("field");
+    div.classList.add("mt1");
+    div.id = "subtaskDiv" + exists.length;
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Subtarefa";
+    input.value = "";
+    input.id = "subTask" + exists.length;
+    input.autocomplete = "off";
+
+    div.appendChild(input);
+
+    if (exists.length == 0)
+        document.getElementById('AnytaskEdit').after(div);
+    if (exists.length > 0) {
+        var baseId = 'subtaskDiv';
+        var after = exists.length - 1;
+        console.log(after);
+        document.getElementById(baseId.concat(after)).after(div);
+    }
+
+}
+const includeSubtask = (id, from) => {
+    if (from == 'create') {
+        let mySubtasks = document.querySelectorAll('[id^="subTask"]');
+        console.log(mySubtasks);
+        if (mySubtasks.length > 0) {
+            mySubtasks.forEach(element => {
+
+                if (element.value != '')
+                    subtask.push({
+                        id: Math.random().toString().replace('0.', ''),
+                        description: element.value,
+                        IsDone: false,
+                        parent: id
+                    });
+
+            });
+        }
+    } else if (from == 'edit') {
+        let mySubtasks = document.querySelectorAll('[id^="subtask"]');
+        if (mySubtasks.length > 0)
+            subtask = [];
         mySubtasks.forEach(element => {
-            if (element.value != '')
+            if (element.firstChild.value != '')
                 subtask.push({
                     id: Math.random().toString().replace('0.', ''),
-                    description: element.value,
+                    description: element.firstChild.value,
                     IsDone: false,
                     parent: id
                 });
         });
+    }
 }
 
 const updateSubtask = (selectedId, status) => {
@@ -354,7 +409,12 @@ const editTask = () => {
     let field = document.querySelector('#inputEditTask');
     let taskId = field.getAttribute('data-id');
     let i = tasks.findIndex((t) => t.id == taskId);
+    let date = document.querySelector('#inputEditDate')
     tasks[i].description = field.value;
+    tasks[i].endDate = date.value;
+    includeSubtask(taskId, 'edit');
+    tasks[i].Subtasks = subtask;
+
     field.removeAttribute('data-id');
     field.value = '';
     showPage('initialPage');

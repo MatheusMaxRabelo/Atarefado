@@ -48,6 +48,7 @@
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
+    z-index: -1;
 }
 
 .slider:before {
@@ -82,4 +83,47 @@ input:checked+.slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.dialogOverlay {
+    display: none;
+    opacity: .8;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #d1d6d4;
+    width: 100%;
+    z-index: 10;
+}
+
+.dialogBox {
+    display: none;
+    position: fixed;
+    background: #3c3f3e;
+    width: 550px;
+    z-index: 10;
+}
+
+.dialogBox div {
+    background: #FFFFFF;
+    margin: 1rem;
+}
+
+.dialogBox div .dialogBoxHead {
+    background: #2d027a;
+    font-size: 1.5rem;
+    padding: 10px;
+    color: #FFFFFF;
+}
+
+.dialogBox div .dialogBoxBody {
+    background: #ccccd4;
+    padding: 20px;
+    color: #000000;
+}
+
+.dialogBox div .dialogBoxFoot {
+    background: #2d027a;
+    padding: 10px;
+    text-align: right;
 }
