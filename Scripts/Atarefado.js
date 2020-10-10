@@ -20,6 +20,10 @@ onload = () => {
         var select = document.getElementById('TaskToggle').checked
         showSubtasks(select);
     };
+    document.querySelector('#EditTaskToggle').onclick = () => {
+        var select = document.getElementById('EditTaskToggle').checked
+        showEditSubtasks(select);
+    };
     document.querySelector('#btnCancelNewTask').onclick = () => {
         document.querySelector('#inputNewTask').value = '';
         document.querySelector('#pageTitle').innerHTML = 'Minhas Tarefas';
@@ -38,9 +42,11 @@ onload = () => {
     };
     document.querySelector('#btnEditTask').onclick = () => {
         editTask();
+        removeSubtaskDivs();
     };
     document.querySelector('#btnRemoveTask').onclick = () => {
         deleteTask();
+        removeSubtaskDivs();
     };
 };
 
@@ -177,6 +183,13 @@ const ajustDate = () => {
 
 const showSubtasks = (status) => {
     var addButton = document.getElementById('btnNewSubtask');
+    if (status)
+        addButton.classList.remove('hidden');
+    else
+        addButton.classList.add('hidden');
+}
+const showEditSubtasks = (status) => {
+    var addButton = document.getElementById('btnNewSubtaskEdit');
     if (status)
         addButton.classList.remove('hidden');
     else
@@ -420,6 +433,7 @@ const editTask = () => {
     showPage('initialPage');
     saveTasks();
     showTasks();
+
 };
 
 const deleteTask = () => {
@@ -435,4 +449,5 @@ const deleteTask = () => {
 
 const saveTasks = () => {
     localStorage.setItem('Atarefado-Tasks', JSON.stringify(tasks));
-}
+};
+navigator.serviceWorker.register('./sw.js');
